@@ -62,67 +62,7 @@ Evolve your API continuously **without** requiring clients to change their code.
 
 ---
 
-## 3. Additive Evolution Pattern
-
-### The Concept
-
-Instead of modifying existing fields, **add new ones** alongside them.
-
-### Example: Splitting a Name Field
-
-**Original API:**
-```json
-{
-  "id": "123",
-  "name": "John Doe"
-}
-```
-
-**Evolved API (backward compatible):**
-```json
-{
-  "id": "123",
-  "name": "John Doe",
-  "first_name": "John",
-  "last_name": "Doe"
-}
-```
-
-**Key Points:**
-- Old field `name` still exists and works
-- New fields `first_name` and `last_name` added
-- Old clients ignore new fields
-- New clients can use either
-
-### Example: Changing Response Structure
-
-**Original:**
-```json
-{
-  "user": {
-    "id": "123",
-    "email": "john@example.com"
-  }
-}
-```
-
-**Need to add metadata? Don't restructure. Add:**
-```json
-{
-  "user": {
-    "id": "123",
-    "email": "john@example.com"
-  },
-  "meta": {
-    "request_id": "req_abc",
-    "timestamp": "2024-01-15T10:30:00Z"
-  }
-}
-```
-
----
-
-## 4. Tolerant Reader Pattern
+## 3. Tolerant Reader Pattern
 
 ### The Concept
 
@@ -146,7 +86,7 @@ function createOrder(req, res) {
 
 ---
 
-## 5. Deprecation Workflow
+## 4. Deprecation Workflow
 
 ### The Timeline
 
@@ -340,43 +280,3 @@ message User {
 ```
 
 ---
-
-## 7. Quick Reference
-
-### Safe Changes ✓
-
-| Category | Safe Changes |
-|----------|--------------|
-| **Fields** | Add optional field, make required → optional |
-| **Endpoints** | Add new endpoint, add optional parameter |
-| **Enums** | Add new value (with client warning) |
-| **Limits** | Increase rate limits, increase payload size |
-| **Performance** | Speed improvements, caching |
-| **Errors** | Add new error codes (if clients handle unknown) |
-
-### Unsafe Changes ❌
-
-| Category | Breaking Changes |
-|----------|------------------|
-| **Fields** | Remove, rename, change type, change format |
-| **Endpoints** | Remove, change URL, change method |
-| **Enums** | Remove value, rename value |
-| **Validation** | Make optional → required, add new validation |
-| **Limits** | Reduce rate limits, reduce payload size |
-| **Auth** | Change auth mechanism, change scopes |
-
----
-
-## 8. References
-
-| Resource | URL |
-|----------|-----|
-| RFC 8594 (Sunset Header) | https://datatracker.ietf.org/doc/html/rfc8594 |
-| RFC 8288 (Web Linking) | https://datatracker.ietf.org/doc/html/rfc8288 |
-| API Versioning Best Practices | https://cloud.google.com/apis/design/versioning |
-| Stripe API Versioning | https://stripe.com/docs/api/versioning |
-| GraphQL Deprecation | https://graphql.org/learn/best-practices/#versioning |
-| Protobuf Updating Messages | https://protobuf.dev/programming-guides/proto3/#updating |
-| Microsoft Breaking Changes Guide | https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md |
-| Postel's Law | https://en.wikipedia.org/wiki/Robustness_principle |
-| Expand-Contract Pattern | https://martinfowler.com/bliki/ParallelChange.html |
